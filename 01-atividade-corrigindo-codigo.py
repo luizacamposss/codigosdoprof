@@ -14,6 +14,7 @@ mostre na tela:
 """
 
 import os
+import time
 
 os.system("cls || clear")
 
@@ -21,67 +22,79 @@ os.system("cls || clear")
 # Variáveis para armazenar as estatísticas
 
 QNTD = 5
-lista_numeros = []
+list_numero = []
 lista_positivos = []
 lista_negativos = []
-menor_numero = 0
-soma_pares = 0
-soma_impares = 0
-soma_geral = 0
 
 # Variáveis para armazenar os números
 for i in range(QNTD):
-    numero = int(input(f"Digite o {i+1}º número: "))
+    numero = float(input(f"Digite o {i+1}º número: "))
+    list_numero.append(numero)
 
 # Def's e o maior/menor
 
-def par_ou_impar():
-    lista_numeros = []
+def par_ou_impar(n1):
+    lista_par = []
+    lista_impar = []
     contador_par = 0
     contador_impar = 0
+    for numero in n1:
+        if numero % 2 == 0:
+            contador_par += 1
+            lista_par.append(numero)
+        else:
+            contador_impar += 1
+            lista_impar.append(numero)
+    return lista_par, lista_impar, contador_par, contador_impar
+
+lista_par, lista_impar, contador_par, contador_impar= par_ou_impar(list_numero)
+
+
+def positivo_ou_negativo(n2):
+    contador_negativos = 0    
+    contador_positivos = 0    
     
-    for i in range (6):
-        numero = int(input(f"Digite o {i+1}º número: "))
-    if numero % 2 == 0:
-        print("\nEsse número é par")
-        contador_par += 1
-    else:
-        print("\nEsse número é impar")
-        contador_impar += 1
-        lista_numeros.append
-        return par_ou_impar  
+    for numero in n2:
+        if numero <= 0:
+            contador_negativos += 1
+        else:
+            contador_positivos += 1
+    return contador_negativos, contador_positivos
 
-def positivo_ou_negativo():
-    negativos = []
-    positivos = []    
-    
-    if numero < 0:
-        negativos.append(numero)
-        resultado1 = "Números negativos"
-    else:
-        positivos.append(numero)
-        resultado = "Números negativos"
+contador_negativos, contador_positivos = positivo_ou_negativo(list_numero)
 
-maior_numero = max(lista_numeros)
-menor_numero = min(lista_numeros)
+def media(n3):
+    QNTD = len(n3)
+    soma = sum(n3)
+    for numero in n3:
+        if numero !=0:
+            media = soma/QNTD
+            return media
+        else:
+            return 0
 
-#Processamento
-pares, impares = par_ou_impar(lista_numeros)
-positivo, negativo = positivo_ou_negativo(lista_numeros)
-quantidade_negativos = len(negativo)
-soma_negativos = sum(negativo)
-quantidade_positivos = len(positivo)
-soma_positivos = sum(positivo)
-media_pares = contador_par
+# Processamento
+media_par = media(lista_par)
+media_impar=media(lista_impar)
+media_total=media(list_numero)
+maior_numero = max(list_numero)
+menor_numero = min(list_numero)
+total = len(list_numero)
 
-print("\nEstatísticas dos números:")
-print(f"Quantidade de pares: {pares}")
-print(f"Quantidade de ímpares: {impares}")
-print(f"Quantidade de positivos: {positivo}")
-print(f"Quantidade de negativos: {negativo}")
-print(f"Maior número: {maior_numero}")
-print(f"Menor número: {menor_numero}")
-print(f"Média dos números pares: {media_pares:.2f}")
-print(f"Média dos números ímpares: {media_impares:.2f}")
-print(f"Média de todos os números: {media_geral:.2f}")
-print(f"Números na ordem inversa: {numeros_invertidos}")
+# Apresentação de dados
+
+f"""\nEstatísticas dos números:
+Quantidade de pares: {contador_par}
+Quantidade de ímpares: {contador_impar}
+Quantidade de positivos: {contador_positivos}
+Quantidade de negativos: {contador_negativos}
+Maior número: {maior_numero}
+Menor número: {menor_numero}
+Média dos números pares: {media_par}
+Média dos números ímpares: {media_impar}
+Média de todos os números: {media_total:.}"""
+
+for i, numero in enumerate (reversed(list_numero)):
+    print(f"Total {total-i}º número: {numero}")
+
+time.sleep(1) 
